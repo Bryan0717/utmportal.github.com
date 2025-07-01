@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduBridge - Feedback</title>
+    <title>EduBridge - Supervisor Hub</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -29,7 +29,7 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a href="supervisor.html" class="nav-link">
+                <a href="supervisor.html" class="nav-link active">
                     <span class="nav-icon">👥</span>
                     <span class="nav-text">Supervisor Hub</span>
                 </a>
@@ -41,7 +41,7 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a href="feedback.html" class="nav-link active">
+                <a href="feedback.html" class="nav-link">
                     <span class="nav-icon">💬</span>
                     <span class="nav-text">Feedback</span>
                 </a>
@@ -61,44 +61,46 @@
     <main class="main-content" id="mainContent">
         <div class="header">
             <div class="page-badge">
-                <span>💬</span>
-                <span>Feedback</span>
+                <span>👥</span>
+                <span>Supervisor Hub</span>
             </div>
         </div>
 
         <div class="content">
-            <h1 class="section-title">Submit Feedback</h1>
-            <p style="color: var(--text-secondary); margin-top: -32px; margin-bottom: 32px;">We value your input. Please share your thoughts on your supervision experience.</p>
+            <h1 class="section-title">Supervisor Hub</h1>
+            <p style="color: var(--text-secondary); margin-top: -32px; margin-bottom: 32px;">Meet our expert supervisors and learn about their projects.</p>
 
-            <div class="feedback-card">
-                <div class="form-header">
-                    <h2 class="form-title">Feedback Form</h2>
-                    <p class="form-subtitle">Your feedback is anonymous and helps us improve.</p>
+            <div class="supervisor-grid">
+                <div class="supervisor-card">
+                    <div class="supervisor-avatar">120 x 120</div>
+                    <div class="supervisor-info">
+                        <h3 class="supervisor-name">DR. AMINUDIN BIN HEHSAN</h3>
+                        <p class="supervisor-detail"><strong>Sponsor:</strong> Emas Syamsul Sdn Bhd</p>
+                        <p class="supervisor-detail"><strong>Project Name:</strong> Kajian Pasaran Faktor-Faktor Mempengaruhi Niat Dalam Pembelian Produk Muslim Di Johor Bahru</p>
+                    </div>
                 </div>
 
-                <form onsubmit="submitFeedback(event)">
-                    <div class="form-group">
-                        <label class="form-label">Supervisor</label>
-                        <select class="form-control" required>
-                            <option value="">Select a supervisor</option>
-                            <option value="dr-aminudin">Dr. Aminudin Bin Hehsan</option>
-                            <option value="dr-zulhasni">Dr. Zulhasni Bin Abdul Rahim</option>
-                            <option value="prof-madya">Prof. Madya Dr. Adibah Binti Abdul Latif</option>
-                        </select>
+                <div class="supervisor-card">
+                    <div class="supervisor-avatar">120 x 120</div>
+                    <div class="supervisor-info">
+                        <h3 class="supervisor-name">DR. ZULHASNI BIN ABDUL RAHIM</h3>
+                        <p class="supervisor-detail"><strong>Sponsor:</strong> Ismarturus Sdn. Bhd</p>
+                        <p class="supervisor-detail"><strong>Project Name:</strong> Framework Development For The Digitalization Of Airside Operations For Future-Ready Airports Utilizing Triz Methodology</p>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Feedback</label>
-                        <textarea class="form-control" placeholder="Share your detailed feedback here. What's working well? What could be improved?" required></textarea>
+                <div class="supervisor-card">
+                    <div class="supervisor-avatar">120 x 120</div>
+                    <div class="supervisor-info">
+                        <h3 class="supervisor-name">PROF. MADYA DR. ADIBAH BINTI ABDUL LATIF</h3>
+                        <p class="supervisor-detail"><strong>Sponsor:</strong> Qashwa Travel Sdn. Bhd.</p>
+                        <p class="supervisor-detail"><strong>Project Name:</strong> Pengaruh Program Pendidikan Umrah Terhadap Transformasi Peribadi Jemaah</p>
                     </div>
-
-                    <button type="submit" class="submit-btn">Submit Feedback</button>
-                </form>
+                </div>
             </div>
         </div>
     </main>
 
     <script src="common.js"></script>
-    <script src="feedback.js"></script>
 </body>
 </html>
