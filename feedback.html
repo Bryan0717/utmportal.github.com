@@ -5,56 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduBridge - Feedback</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- ADDED: Link for the dropdown arrow icon -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 <body>
-    <!-- Sidebar -->
+    <!--
+      UPDATED SIDEBAR:
+      The sidebar code has been updated to include the "Document" dropdown.
+      The 'active' class has been correctly placed on the "Feedback" link.
+    -->
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <a href="index.html" class="logo-wrapper">
-                <div class="logo-icon">🎓</div>
-                <span class="logo-text">EduBridge</span>
-            </a>
-            <button class="toggle-btn" onclick="toggleSidebar()">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            </button>
-        </div>
-        
-        <nav class="nav-menu">
-            <div class="nav-item">
-                <a href="index.html" class="nav-link">
-                    <span class="nav-icon">📊</span>
-                    <span class="nav-text">Student Dashboard</span>
-                </a>
-            </div>
-            <div class="nav-item">
-                <a href="supervisor.html" class="nav-link">
-                    <span class="nav-icon">👥</span>
-                    <span class="nav-text">Supervisor Hub</span>
-                </a>
-            </div>
-            <div class="nav-item">
-                <a href="calendar.html" class="nav-link">
-                    <span class="nav-icon">📅</span>
-                    <span class="nav-text">Calendar</span>
-                </a>
-            </div>
-            <div class="nav-item">
-                <a href="feedback.html" class="nav-link active">
-                    <span class="nav-icon">💬</span>
-                    <span class="nav-text">Feedback</span>
-                </a>
-            </div>
-        </nav>
+      <div class="sidebar-header">
+        <a href="index.html" class="logo-wrapper">
+          <div class="logo-icon">🎓</div>
+          <span class="logo-text">EduBridge</span>
+        </a>
+        <button class="toggle-btn" onclick="toggleSidebar()">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
 
+     <nav class="nav-menu">
+      <div class="nav-item">
+        <a href="index.html" class="nav-link">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Student Dashboard</span>
+        </a>
+      </div>
+
+      <div class="nav-item">
+        <a href="supervisor.html" class="nav-link">
+          <span class="nav-icon">👥</span>
+          <span class="nav-text">Supervisor Hub</span>
+        </a>
+      </div>
+
+    <div class="nav-item">
+      <a href="javascript:void(0);" class="nav-link" onclick="toggleSubItems()">
+        <span class="nav-icon">📁</span>
+        <span class="nav-text">Document</span>
+        <span class="material-symbols-outlined" id="dropdownArrow">keyboard_arrow_down</span>
+      </a>
+    </div>
+
+    <div class="nav-sub-items" id="subItems" style="display: none;">
+      <div class="nav-item sub-item">
+        <a href="achievement.html" class="nav-link">
+          <span class="nav-icon">🏆</span>
+          <span class="nav-text">Achievement</span>
+        </a>
+      </div>
+      <div class="nav-item sub-item">
+        <a href="research.html" class="nav-link">
+          <span class="nav-icon">🔬</span>
+          <span class="nav-text">Research</span>
+        </a>
+      </div>
+      <div class="nav-item sub-item">
+        <a href="progress.html" class="nav-link">
+          <span class="nav-icon">📈</span>
+          <span class="nav-text">Progress</span>
+        </a>
+      </div>
+    </div>
+
+      <div class="nav-item">
+        <a href="calendar.html" class="nav-link">
+          <span class="nav-icon">📅</span>
+          <span class="nav-text">Calendar</span>
+        </a>
+      </div>
+
+      <div class="nav-item">
+        <!-- The "active" class is now correctly on this link -->
+        <a href="feedback.html" class="nav-link active">
+          <span class="nav-icon">💬</span>
+          <span class="nav-text">Feedback</span>
+        </a>
+      </div>
+    </nav>
+
+      <!-- User Profile -->
+      <a href="edit-profile.html" style="text-decoration: none; color: inherit;">
         <div class="user-profile">
-            <div class="user-avatar">JD</div>
-            <div class="user-info">
-                <div class="user-name">John Doe</div>
-                <div class="user-email">john.doe@edubridge.com</div>
-            </div>
+          <div class="user-avatar">JD</div>
+          <div class="user-info">
+            <div class="user-name">John Doe</div>
+            <div class="user-email">john.doe@edubridge.com</div>
+          </div>
         </div>
+      </a>
     </aside>
 
     <!-- Main Content -->
@@ -97,6 +139,19 @@
             </div>
         </div>
     </main>
+
+    <!-- ADDED: JavaScript for the dropdown menu -->
+    <script>
+    function toggleSubItems() {
+      const subItems = document.getElementById("subItems");
+      const arrow = document.getElementById("dropdownArrow");
+
+      const isVisible = subItems.style.display === "block";
+      subItems.style.display = isVisible ? "none" : "block";
+
+      arrow.textContent = isVisible ? "keyboard_arrow_down" : "keyboard_arrow_up";
+    }
+    </script>
 
     <script src="common.js"></script>
     <script src="feedback.js"></script>
