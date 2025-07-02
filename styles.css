@@ -237,6 +237,35 @@ body {
     margin-left: 80px;
 }
 
+/*Dropdown*/
+.dropdown-arrow {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+.document-toggle {
+  cursor: pointer;
+}
+
+.document-toggle:hover {
+  background: var(--sidebar-hover);
+  color: white;
+}
+
+.dropdown-content {
+  display: none;
+  margin-left: 12px;
+}
+
+.nav-item.sub-item {
+  margin-left: 40px;
+}
+
+
 /* Modern Header */
 .header {
     background: rgba(255, 255, 255, 0.8);
