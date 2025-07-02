@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile - EduBridge</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Base styles from your original file */
+    :root {
+      --sidebar-bg: #1f2937;
+      --sidebar-hover: #374151;
+      --bg-main: #f3f4f6;
+      --bg-card: #ffffff;
+      --text-primary: #111827;
+      --primary: #8b5cf6;
+      --border: #e5e7eb;
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: var(--sidebar-bg);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .logo-wrapper {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-radius: 5px;
+      color: white;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .nav-link:hover {
+      background-color: var(--sidebar-hover);
+    }
+
+    .user-profile {
+      margin-top: auto;
+      background-color: var(--sidebar-hover);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .user-avatar {
+      background-color: var(--primary);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: white;
+    }
+
+    .main-content {
+      flex: 1;
+      background-color: var(--bg-main);
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    /* --- START: CSS for New Profile Header --- */
+    .profile-header {
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      background-color: var(--bg-card);
+      border-radius: 10px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+
+    .profile-banner {
+      height: 200px;
+      background-image: url('https://i.imgur.com/g9nENyN.png'); /* Low-poly background */
+      background-size: cover;
+      background-position: center;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      position: relative;
+    }
+
+    .profile-picture-container {
+      position: absolute;
+      top: 200px; /* Same as banner height */
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    
+    .profile-avatar-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    .profile-avatar-img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 5px solid white;
+      background-color: #e0e0e0; /* Placeholder color */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .profile-avatar-img svg {
+        width: 60%;
+        height: 60%;
+        fill: #cccccc;
+    }
+
+    .profile-name {
+      margin-top: 75px; /* Creates space for the overlapping avatar */
+      padding-bottom: 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--text-primary);
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    
+    .edit-button {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        background-color: #448aff; /* Blue color from image */
+        border-radius: 50%;
+        border: 2px solid white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        padding: 0; /* Override default button padding */
+    }
+    
+    .edit-button:hover {
+        background-color: #2962ff;
+    }
+
+    .edit-button svg {
+        width: 16px;
+        height: 16px;
+        fill: #ffab40; /* Orange color from image */
+    }
+
+    .banner-edit {
+        top: 15px;
+        right: 15px;
+    }
+
+    .avatar-edit {
+        bottom: 10px;
+        right: 10px;
+    }
+    /* --- END: CSS for New Profile Header --- */
+
+    .form-wrapper {
+      max-width: 900px;
+      background-color: var(--bg-card);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-md);
+      margin: auto;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      text-align: center;
+      color: var(--text-primary);
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      font-size: 14px;
+      background-color: white;
+    }
+
+    /* Made selector more specific to avoid conflict with edit buttons */
+    button[type="submit"] {
+      grid-column: 1 / -1;
+      margin-top: 30px;
+      padding: 12px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #6d28d9;
+    }
+
+    @media screen and (max-width: 768px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+
+      .full-width {
+        grid-column: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div>
+        <a href="index.html" class="logo-wrapper">
+          <div class="logo-icon">🎓</div>
+          <span class="logo-text">EduBridge</span>
+        </a>
+        <nav class="nav-menu">
+          <a href="index.html" class="nav-link">📊 Student Dashboard</a>
+          <a href="supervisor.html" class="nav-link">👥 Supervisor Hub</a>
+          <a href="calendar.html" class="nav-link">📅 Calendar</a>
+          <a href="feedback.html" class="nav-link">💬 Feedback</a>
+        </nav>
+      </div>
+
+      <a href="edit-profile.html" style="text-decoration: none; color: inherit;">
+        <div class="user-profile">
+          <div class="user-avatar">JD</div>
+          <div class="user-info">
+            <div class="user-name">John Doe</div>
+            <div class="user-email">john.doe@edubridge.com</div>
+          </div>
+        </div>
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- START: New Profile Header -->
+      <div class="profile-header">
+        <div class="profile-banner">
+          <button class="edit-button banner-edit" title="Edit banner image">
+            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+          </button>
+        </div>
+
+        <div class="profile-picture-container">
+          <div class="profile-avatar-wrapper">
+            <div class="profile-avatar-img">
+                <!-- SVG placeholder for profile picture -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+            </div>
+            <button class="edit-button avatar-edit" title="Edit profile picture">
+              <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+            </button>
+          </div>
+        </div>
+        
+        <h1 class="profile-name">ELEANOR</h1>
+      </div>
+      <!-- END: New Profile Header -->
+
+      <div class="form-wrapper">
+        <h2>Edit Profile</h2>
+        <form>
+          <div class="full-width">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" value="ELEANOR">
+          </div>
+
+          <div class="full-width">
+            <label for="bio">Short Bio</label>
+            <textarea id="bio" name="bio" rows="3"></textarea>
+          </div>
+
+          <div>
+            <label for="degree">Name of Bachelor Degree</label>
+            <input type="text" id="degree" name="degree">
+          </div>
+
+          <div>
+            <label for="cgpa">CGPA Bachelor</label>
+            <input type="text" id="cgpa" name="cgpa">
+          </div>
+
+          <div>
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone">
+          </div>
+
+          <div>
+            <label for="nationality">Nationality</label>
+            <select id="nationality" name="nationality">
+              <option>Select Nationality...</option>
+              <option>Malaysian</option>
+              <option>International</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="english">English Proficiency Level</label>
+            <select id="english" name="english">
+              <option>Select English Proficiency Level</option>
+              <option>Beginner</option>
+              <option>Intermediate</option>
+              <option>Advanced</option>
+              <option>Fluent</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="status">Current Undergraduate Status</label>
+            <input type="text" id="status" name="status" value="Registered">
+          </div>
+
+          <button type="submit">Save Profile</button>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
