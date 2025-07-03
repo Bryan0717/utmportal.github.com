@@ -7,70 +7,151 @@
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <style>
-    .progress-table-container {
-        background: var(--bg-card);
-        border-radius: 24px;
-        padding: 32px;
-        box-shadow: var(--shadow-lg);
-        overflow-x: auto; /* For responsiveness on small screens */
+    /* --- Header for Title and Add Button --- */
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
-    .progress-table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 600px; /* Ensures table doesn't get too cramped */
+    .add-task-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 32px;
+      font-weight: 300;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-md);
     }
-    .progress-table th, .progress-table td {
-        padding: 16px 20px;
-        text-align: left;
-        border-bottom: 1px solid var(--border);
+    .add-task-btn:hover {
+      background: #7c3aed;
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: var(--shadow-lg);
     }
-    .progress-table th {
-        font-size: 14px;
-        font-weight: 600;
+
+    /* --- Styles for Action Buttons in Table --- */
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    .action-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s;
+    }
+    .action-btn .material-symbols-outlined {
+        font-size: 20px;
         color: var(--text-secondary);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
     }
-    .progress-table td {
-        font-size: 15px;
-        color: var(--text-primary);
+    .action-btn.edit-btn:hover { background-color: #dbeafe; }
+    .action-btn.edit-btn:hover .material-symbols-outlined { color: #1e40af; }
+    .action-btn.delete-btn:hover { background-color: #fee2e2; }
+    .action-btn.delete-btn:hover .material-symbols-outlined { color: #991b1b; }
+
+
+    /* --- FINAL, COMPACT MODAL STYLES FOR MACBOOK SIZE --- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(26, 22, 37, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1001;
+      display: none; /* Hidden by default */
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
-    .progress-table tbody tr:hover {
-        background-color: var(--bg-main);
+    .modal-overlay.active { display: flex; }
+    .modal-content {
+      background: var(--bg-card);
+      border-radius: 20px; /* EDITED: Slightly smaller radius */
+      padding: 28px; /* EDITED: Reduced padding */
+      box-shadow: var(--shadow-xl);
+      max-width: 480px; /* EDITED: Slightly smaller width */
+      width: 100%;
+      position: relative;
     }
-    .status-badge {
-        display: inline-block;
-        padding: 6px 14px;
-        border-radius: 99px;
-        font-size: 12px;
-        font-weight: 600;
-        white-space: nowrap;
+    .close-modal-btn {
+      position: absolute; top: 12px; right: 15px; background: none; border: none; font-size: 30px;
+      color: var(--text-secondary); cursor: pointer; transition: color 0.2s ease;
     }
-    .status-done {
-        background-color: #d1fae5;
-        color: #065f46;
+    .close-modal-btn:hover { color: var(--text-primary); }
+    .modal-content h2 { 
+        font-size: 22px; /* EDITED: Smaller title */
+        font-weight: 700; 
+        margin-bottom: 22px; /* EDITED: Reduced margin */
+        color: var(--text-primary); 
     }
-    .status-working {
-        background-color: #dbeafe;
-        color: #1e40af;
+    .form-grid { 
+        display: grid; 
+        grid-template-columns: 1fr; 
+        gap: 14px; /* EDITED: Reduced gap between form items */
     }
-    .status-stuck {
-        background-color: #fee2e2;
-        color: #991b1b;
+    .form-group label { 
+        display: block; 
+        font-weight: 600; 
+        margin-bottom: 6px; /* EDITED: Reduced margin */
     }
+    .form-group input, .form-group select {
+      width: 100%; 
+      padding: 10px 12px; /* EDITED: Reduced padding inside inputs */
+      border: 2px solid var(--border); 
+      border-radius: 10px; /* EDITED: Smaller radius */
+      font-size: 15px; /* EDITED: Smaller font */
+      transition: all 0.3s ease; 
+      background: var(--bg-main); 
+      font-family: inherit;
+    }
+    .form-group input:focus, .form-group select:focus {
+        outline: none; border-color: var(--primary); background: white;
+    }
+    .modal-submit-btn {
+      background: var(--gradient-primary); color: white; border: none; padding: 12px 32px; /* EDITED: Reduced vertical padding */
+      border-radius: 10px; /* EDITED: Smaller radius */
+      font-size: 15px; /* EDITED: Smaller font */
+      font-weight: 600; cursor: pointer; transition: all 0.3s ease; 
+      margin-top: 22px; /* EDITED: Adjusted margin */
+      width: 100%; /* Make button full width */
+    }
+    .modal-submit-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+
+    /* Existing Table Styles */
+    .progress-table-container {
+        background: var(--bg-card); border-radius: 24px; padding: 32px;
+        box-shadow: var(--shadow-lg); overflow-x: auto;
+    }
+    .progress-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    .progress-table th, .progress-table td { padding: 16px 20px; text-align: left; border-bottom: 1px solid var(--border); }
+    .progress-table th { font-size: 14px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+    .progress-table td { font-size: 15px; color: var(--text-primary); }
+    .progress-table tbody tr:hover { background-color: var(--bg-main); }
+    .status-badge { display: inline-block; padding: 6px 14px; border-radius: 99px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+    .status-done { background-color: #d1fae5; color: #065f46; }
+    .status-working { background-color: #dbeafe; color: #1e40af; }
+    .status-stuck { background-color: #fee2e2; color: #991b1b; }
   </style>
 </head>
 <body>
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <a href="index.html" class="logo-wrapper">
-        <div class="logo-icon">🎓</div>
-        <span class="logo-text">EduBridge</span>
-      </a>
-      <button class="toggle-btn" onclick="toggleSidebar()">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
-      </button>
+      <a href="index.html" class="logo-wrapper"><div class="logo-icon">🎓</div><span class="logo-text">EduBridge</span></a>
+      <button class="toggle-btn" onclick="toggleSidebar()"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg></button>
     </div>
     <nav class="nav-menu">
       <div class="nav-item"><a href="index.html" class="nav-link"><span class="nav-icon">📊</span><span class="nav-text">Student Dashboard</span></a></div>
@@ -85,10 +166,7 @@
       <div class="nav-item"><a href="feedback.html" class="nav-link"><span class="nav-icon">💬</span><span class="nav-text">Feedback</span></a></div>
     </nav>
     <a href="edit-profile.html" style="text-decoration: none; color: inherit;">
-      <div class="user-profile">
-        <div class="user-avatar">JD</div>
-        <div class="user-info"><div class="user-name">John Doe</div><div class="user-email">john.doe@edubridge.com</div></div>
-      </div>
+      <div class="user-profile"><div class="user-avatar">ET</div><div class="user-info"><div class="user-name">Eleanor Ting</div><div class="user-email">eleanor@gmail.com</div></div></div>
     </a>
   </aside>
 
@@ -97,8 +175,10 @@
       <div class="page-badge"><span>📈</span><span>Progress Tracker</span></div>
     </div>
     <div class="content">
-      <h1 class="section-title">Project Progress</h1>
-      <p style="color: var(--text-secondary); margin-top: -32px; margin-bottom: 32px;">Track the status of your research and project tasks.</p>
+      <div class="content-header">
+        <h1 class="section-title" style="margin-bottom: 0;">Project Progress</h1>
+        <button class="add-task-btn" id="addTaskBtn" title="Add New Task">+</button>
+      </div>
 
       <div class="progress-table-container">
         <table class="progress-table">
@@ -108,44 +188,69 @@
                     <th>Owner</th>
                     <th>Status</th>
                     <th>Due Date</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="progressTableBody">
                 <tr>
                     <td>Literature Review - Chapter 1</td>
-                    <td>John Doe</td>
+                    <td>Eleanor</td>
                     <td><span class="status-badge status-done">Done</span></td>
                     <td>2025-05-30</td>
+                    <td class="action-buttons">
+                        <button class="action-btn edit-btn" title="Edit Task"><span class="material-symbols-outlined">edit</span></button>
+                        <button class="action-btn delete-btn" title="Delete Task"><span class="material-symbols-outlined">delete</span></button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Data Collection - Phase 1</td>
-                    <td>John Doe</td>
+                    <td>Eleanor</td>
                     <td><span class="status-badge status-working">Working on it</span></td>
                     <td>2025-06-15</td>
+                    <td class="action-buttons">
+                        <button class="action-btn edit-btn" title="Edit Task"><span class="material-symbols-outlined">edit</span></button>
+                        <button class="action-btn delete-btn" title="Delete Task"><span class="material-symbols-outlined">delete</span></button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Methodology Draft</td>
-                    <td>Dr. Aminudin</td>
+                    <td>Dr. Wong</td>
                     <td><span class="status-badge status-working">Working on it</span></td>
                     <td>2025-06-20</td>
+                    <td class="action-buttons">
+                        <button class="action-btn edit-btn" title="Edit Task"><span class="material-symbols-outlined">edit</span></button>
+                        <button class="action-btn delete-btn" title="Delete Task"><span class="material-symbols-outlined">delete</span></button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Develop Survey Instrument</td>
-                    <td>John Doe</td>
+                    <td>Eleanor</td>
                     <td><span class="status-badge status-stuck">Stuck</span></td>
                     <td>2025-06-10</td>
+                    <td class="action-buttons">
+                        <button class="action-btn edit-btn" title="Edit Task"><span class="material-symbols-outlined">edit</span></button>
+                        <button class="action-btn delete-btn" title="Delete Task"><span class="material-symbols-outlined">delete</span></button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Submit Ethics Application</td>
-                    <td>John Doe</td>
+                    <td>Eleanor</td>
                     <td><span class="status-badge status-done">Done</span></td>
                     <td>2025-05-20</td>
+                    <td class="action-buttons">
+                        <button class="action-btn edit-btn" title="Edit Task"><span class="material-symbols-outlined">edit</span></button>
+                        <button class="action-btn delete-btn" title="Delete Task"><span class="material-symbols-outlined">delete</span></button>
+                    </td>
                 </tr>
                 <tr>
                     <td>Analyze Preliminary Data</td>
-                    <td>John Doe</td>
+                    <td>Eleanor</td>
                     <td><span class="status-badge status-working">Working on it</span></td>
                     <td>2025-07-01</td>
+                    <td class="action-buttons">
+                        <button class="action-btn edit-btn" title="Edit Task"><span class="material-symbols-outlined">edit</span></button>
+                        <button class="action-btn delete-btn" title="Delete Task"><span class="material-symbols-outlined">delete</span></button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -153,7 +258,43 @@
     </div>
   </main>
 </div>
+
+<!-- MODAL FOR ADDING/EDITING TASKS -->
+<div class="modal-overlay" id="taskModal">
+  <div class="modal-content">
+    <button class="close-modal-btn" id="closeModalBtn">×</button>
+    <h2 id="modalTitle">Add New Task</h2>
+    <form id="taskForm">
+        <input type="hidden" id="editRowIndex" value="">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="taskName">Task Name</label>
+                <input type="text" id="taskName" required>
+            </div>
+            <div class="form-group">
+                <label for="taskOwner">Owner</label>
+                <input type="text" id="taskOwner" required>
+            </div>
+            <div class="form-group">
+                <label for="taskStatus">Status</label>
+                <select id="taskStatus" required>
+                    <option value="working">Working on it</option>
+                    <option value="done">Done</option>
+                    <option value="stuck">Stuck</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="taskDueDate">Due Date</label>
+                <input type="date" id="taskDueDate" required>
+            </div>
+        </div>
+      <button type="submit" class="modal-submit-btn">Save Task</button>
+    </form>
+  </div>
+</div>
+
 <script>
+  // --- Sidebar Logic ---
   function toggleSubItems() {
     const subItems = document.getElementById("subItems");
     const arrow = document.getElementById("dropdownArrow");
@@ -165,6 +306,109 @@
       const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('collapsed');
   }
+
+  // --- Progress Page Add/Edit/Delete Logic ---
+  document.addEventListener('DOMContentLoaded', () => {
+    const addTaskBtn = document.getElementById('addTaskBtn');
+    const modal = document.getElementById('taskModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const taskForm = document.getElementById('taskForm');
+    const modalTitle = document.getElementById('modalTitle');
+    const tableBody = document.getElementById('progressTableBody');
+    const editRowIndexInput = document.getElementById('editRowIndex');
+
+    const openModal = () => modal.classList.add('active');
+    const closeModal = () => modal.classList.remove('active');
+
+    const statusMap = {
+        'working': { text: 'Working on it', class: 'status-working' },
+        'done': { text: 'Done', class: 'status-done' },
+        'stuck': { text: 'Stuck', class: 'status-stuck' },
+    };
+
+    // Open modal for ADDING a new task
+    addTaskBtn.addEventListener('click', () => {
+        taskForm.reset();
+        editRowIndexInput.value = '';
+        modalTitle.textContent = 'Add New Task';
+        openModal();
+    });
+
+    // Handle clicks inside the table (for Edit and Delete)
+    tableBody.addEventListener('click', (event) => {
+        const target = event.target.closest('button');
+        if (!target) return;
+
+        const row = target.closest('tr');
+
+        // Handle DELETE
+        if (target.classList.contains('delete-btn')) {
+            if (confirm('Are you sure you want to delete this task?')) {
+                row.remove();
+            }
+        }
+        
+        // Handle EDIT
+        if (target.classList.contains('edit-btn')) {
+            const cells = row.children;
+            const statusText = cells[2].querySelector('.status-badge').textContent.toLowerCase().replace(/ /g, '');
+
+            const statusKey = Object.keys(statusMap).find(key => statusMap[key].text.toLowerCase().replace(/ /g, '') === statusText) || 'working';
+
+            // Populate the form
+            document.getElementById('taskName').value = cells[0].textContent;
+            document.getElementById('taskOwner').value = cells[1].textContent;
+            document.getElementById('taskStatus').value = statusKey;
+            document.getElementById('taskDueDate').value = cells[3].textContent;
+            
+            editRowIndexInput.value = row.rowIndex - 1; 
+            modalTitle.textContent = 'Edit Task';
+            openModal();
+        }
+    });
+
+    // Handle form submission (for both Add and Edit)
+    taskForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const taskName = document.getElementById('taskName').value;
+        const taskOwner = document.getElementById('taskOwner').value;
+        const taskStatusKey = document.getElementById('taskStatus').value;
+        const taskDueDate = document.getElementById('taskDueDate').value;
+        const editRowIndex = editRowIndexInput.value;
+
+        const statusInfo = statusMap[taskStatusKey];
+        const statusBadgeHTML = `<span class="status-badge ${statusInfo.class}">${statusInfo.text}</span>`;
+
+        if (editRowIndex !== '') {
+            // EDIT mode: Update the existing row
+            const row = tableBody.rows[editRowIndex];
+            row.cells[0].textContent = taskName;
+            row.cells[1].textContent = taskOwner;
+            row.cells[2].innerHTML = statusBadgeHTML;
+            row.cells[3].textContent = taskDueDate;
+        } else {
+            // ADD mode: Create a new row
+            const newRow = tableBody.insertRow();
+            newRow.innerHTML = `
+                <td>${taskName}</td>
+                <td>${taskOwner}</td>
+                <td>${statusBadgeHTML}</td>
+                <td>${taskDueDate}</td>
+                <td class="action-buttons">
+                    <button class="action-btn edit-btn" title="Edit Task"><span class="material-symbols-outlined">edit</span></button>
+                    <button class="action-btn delete-btn" title="Delete Task"><span class="material-symbols-outlined">delete</span></button>
+                </td>
+            `;
+        }
+        closeModal();
+    });
+    
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal();
+    });
+  });
 </script>
 </body>
 </html>
