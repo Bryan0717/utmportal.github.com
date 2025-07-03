@@ -6,6 +6,95 @@
     <title>EduBridge - Student Portal</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <!-- START: UPDATED CUSTOM STYLES -->
+    <style>
+      /*
+        NOTE: These styles are based on the structure of your HTML and the provided image.
+        The styles for '.event-item', '.event-details', etc., assume your `dashboard.js`
+        creates elements with these class names.
+      */
+
+      /* Hide the country flag (from original request) */
+      .event-item img, .event-flag {
+        display: none !important;
+      }
+
+      /* Container for the list of events */
+      .event-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Space between event cards */
+      }
+
+      /* --- STYLING FOR EACH EVENT ITEM --- */
+      .event-item {
+        display: flex;
+        justify-content: space-between; /* Pushes text and arrow to opposite ends */
+        align-items: center; /* Vertically centers the content */
+        background-color: #f8f9fa;
+        padding: 1rem;
+        border-radius: 12px;
+        /* This creates the purple bar on the left */
+        border-left: 5px solid #7551e9; /* You can change this color */
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      }
+
+      .event-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      /* Text content within an event item */
+      .event-item .event-title {
+        font-weight: 600; /* Bolder title */
+        font-size: 1rem;
+        color: #212529;
+      }
+
+      .event-item .event-date {
+        font-size: 0.9rem;
+        color: #6c757d; /* Softer grey color for the date */
+        margin-top: 4px;
+      }
+
+      /* Style for the arrow button on the right */
+      .event-item a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background-color: #e9ecef;
+        border-radius: 50%;
+        color: #495057;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: background-color 0.2s, color 0.2s;
+      }
+
+      .event-item a:hover {
+        background-color: #7551e9; /* Match the bar color on hover */
+        color: white;
+      }
+
+      /* --- STYLING FOR PAGINATION --- */
+      .pagination-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+      }
+      
+      /* Make the 'Page 1 of 2' text smaller and grey */
+      .pagination-controls .page-info {
+        font-size: 0.875rem; /* Smaller font size */
+        color: #6c757d;      /* Softer grey color */
+      }
+
+    </style>
+    <!-- END: UPDATED CUSTOM STYLES -->
+
 </head>
 <body>
 <div class="layout">
